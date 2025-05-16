@@ -3,12 +3,12 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import ConnectDB from './config/db.js';
-import bodyParser from 'body-parser';
+
 import userRoutes from './routes/userRoutes.js';
 import noteRoutes from './routes/noteRoutes.js';
 
-dotenv.config();
 const app = express();
+dotenv.config();
 ConnectDB();
 
 // ✅ CORS Configuration
@@ -17,9 +17,7 @@ app.use(cors({
     credentials: true, // Enable if you're using cookies or auth headers
 }));
 
-// Middleware
-app.use(bodyParser.json());
-app.use(express.json());
+app.use(express.json()); // Only use once
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,7 +25,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/user', userRoutes);
 app.use('/api/notes', noteRoutes);
 
-// Export the Express app as a Vercel serverless function
-export default function handler(req, res) {
-  app(req, res); // Pass the request and response objects to the Express app
-}
+// Start the server (for local)
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+export default app;
