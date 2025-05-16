@@ -11,17 +11,10 @@ const app = express();
 dotenv.config();
 ConnectDB();
 
-const allowedOrigins = ['https://to-do-notes-umber.vercel.app'];
-
+// ✅ CORS Configuration
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
+    origin: process.env.FRONTEND_URL, // Make sure this URL is set correctly in Vercel environment variables
+    credentials: true, // Enable if you're using cookies or auth headers
 }));
 
 app.use(express.json()); // Only use once
