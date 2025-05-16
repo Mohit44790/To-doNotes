@@ -13,7 +13,7 @@ ConnectDB();
 
 // ✅ CORS Configuration
 app.use(cors({
-    origin: process.env.FRONTEND_URL, // Make sure this URL is set correctly in Vercel environment variables
+    origin: "https://to-do-notes-umber.vercel.app", // Make sure this URL is set correctly in Vercel environment variables
     credentials: true, // Enable if you're using cookies or auth headers
 }));
 
